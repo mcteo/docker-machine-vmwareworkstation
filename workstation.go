@@ -1,7 +1,5 @@
 /*
  * Copyright 2014 VMware, Inc.  All rights reserved.  Licensed under the Apache v2 License.
- */
-/*
  * Copyright 2015 Gonzalo Peci  All rights reserved.  Licensed under the Apache v2 License.
  */
 
@@ -44,7 +42,6 @@ type Driver struct {
 	CPU            int
 	ISO            string
 	Boot2DockerURL string
-	CPUS           int
 
 	SSHPassword    string
 	ConfigDriveISO string
@@ -55,7 +52,7 @@ const (
 	defaultSSHUser  = B2DUser
 	defaultSSHPass  = B2DPass
 	defaultDiskSize = 20000
-	defaultCpus     = 1
+	defaultCPU      = 1
 	defaultMemory   = 1024
 )
 
@@ -79,7 +76,7 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			EnvVar: "WORKSTATION_CPU_COUNT",
 			Name:   "vmwareworkstation-cpu-count",
 			Usage:  "number of CPUs for the machine (-1 to use the number of CPUs available)",
-			Value:  defaultCpus,
+			Value:  defaultCPU,
 		},
 		mcnflag.IntFlag{
 			EnvVar: "WORKSTATION_MEMORY_SIZE",
@@ -110,7 +107,7 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 
 func NewDriver(hostName, storePath string) drivers.Driver {
 	return &Driver{
-		CPUS:        defaultCpus,
+		CPU:         defaultCPU,
 		Memory:      defaultMemory,
 		DiskSize:    defaultDiskSize,
 		SSHPassword: defaultSSHPass,
@@ -298,7 +295,7 @@ func (d *Driver) Create() error {
 	d.IPAddress = ip
 
 	// Do not execute the rest of boot2docker specific configuration
-	// The uplaod of the public ssh key uses a ssh connection,
+	// The upload of the public ssh key uses a ssh connection,
 	// this works without installed vmware client tools
 	if d.ConfigDriveURL != "" {
 		var keyfh *os.File

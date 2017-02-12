@@ -1,7 +1,5 @@
 /*
  * Copyright 2014 VMware, Inc.  All rights reserved.  Licensed under the Apache v2 License.
- */
-/*
  * Copyright 2015 Gonzalo Peci  All rights reserved.  Licensed under the Apache v2 License.
  */
 
